@@ -1,9 +1,8 @@
-#!/usr/bin/env python         #指定这是一个python文件，使用这个解释器执行   
 #-*- coding:utf-8 -*-         #设定编码格式，防止报错
-import crypt                  #调用crypt这个库
+import hashlib                #调用crypt这个库
 
-user_passfile = "/etc/shadow"   #获取系统密码路径
-zidian = "/root/Desktop/wordlist.TXT" #获取字典路径
+user_passfile = "shadow"   #获取系统密码路径
+zidian = "word_list.txt" #获取字典路径
 
 #提取系统中的用户名和密文
 def get_pass(user_passfile):   
@@ -29,10 +28,13 @@ def main(user_passfile,zidian):
     mingwen = look_d(zidian)              #调用自定义函数look_d
     for user in used:
         passwd = used[user]               #一次遍历每个用户的密文
-        salt = "$6$"+passwd.split("$")[2]  #获取盐值
+        salt = passwd.split("$")[2]  #获取盐值
         for passwdmw in mingwen:       #遍历系统中的每个完整密文
-              if passwd == crypt.crypt(passwdmw.rstrip(),salt):    #如果我们猜想的密文与系统中的密文相同，输入它的用户名和密码
-                    print("userName:%s passWord:%s" %(user,passwdmw.rstrip()))  
+            print(passwdmw)
+            tmp = hashlib.sha512(passwdmw+salt).hexdigest()
+            print(tmp)
+            if passwd.split("$")[3] == tmp:    #如果我们猜想的密文与系统中的密文相同，输入它的用户名和密码
+                print("userName:%s passWord:%s" %(user,passwdmw.rstrip())) 
 
 
 if __name__ == "__main__":
