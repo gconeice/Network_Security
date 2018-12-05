@@ -1,0 +1,14 @@
+**使用方法**
+
+- python 使用2.7版本
+
+- 使用openssl生成证书和密钥
+
+  openssl req -new -x509 -days 365 -nodes -out mycertfile.pem -keyout
+  mykeyfile.pem
+
+- 将mycertfile.pem和配置文件config.conf放在本机，与local.py在同一目录下，运行python2.7 local.py
+
+- 将mykeyfile.pem、mycertfile.pem及配置文件config.conf放到vps中，config.conf中的server_ip:"127.0.0.1"
+
+  vps下运行命令python2.7 server.py

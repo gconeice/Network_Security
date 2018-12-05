@@ -1,0 +1,6 @@
+{
+    "server_ip":"xxx.xxx.xxx.xxx",
+    "server_port":8086,
+    "local_port":1080,
+    "timeout":2000
+}
